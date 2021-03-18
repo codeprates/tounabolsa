@@ -5,11 +5,13 @@ import { useRouter } from 'next/router';
 import Styles from '../src/components/Styles';
 import Footer from '../src/components/Footer';
 
-
-export default function Home() {
+export default function AccountCreation() {
   const router = useRouter();
+  const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [passwordConf, setPasswordConf] = React.useState('');
+
 
   return (
     <Styles.Background>
@@ -24,10 +26,18 @@ export default function Home() {
       <Styles.MainArea>
         <form onSubmit={function (EventData) {
           EventData.preventDefault();
-          router.push(`/dashboard?user=${email}`);
+          router.push(`/`);
         }}
         >
           <Styles.Form> 
+            <input
+              type="text"
+              name="userName"
+              // pattern="[A-z]"
+              onChange={(EventData) => setName(EventData.target.value)}
+              placeholder="Digite o seu nome completo"
+              value={name}
+            />
             <input
               type="email"
               name="userEmail"
@@ -39,17 +49,32 @@ export default function Home() {
               type="password"
               name="userPass"
               onChange={(EventData) => setPassword(EventData.target.value)}
-              placeholder="Digite sua senha"
+              placeholder="Crie uma senha"
               value={password}
             />
-            <button type="submit" disabled={email.length === 0 || password.length === 0}>
-              {`LogIn`}
+            <input
+              type="password"
+              name="userPassConf"
+              onChange={(EventData) => setPasswordConf(EventData.target.value)}
+              placeholder="Confirme a sua senha"
+              value={passwordConf}
+            />
+            <button 
+              type="submit" 
+              disabled={
+                name.length === 0 || 
+                email.length === 0 || 
+                password.length === 0 ||
+                password !== passwordConf
+              }
+            >
+              {`Criar conta`}
             </button>
           </Styles.Form>
         </form>
 
         <Styles.Link>
-          <a href="/account_creation">Criar uma conta</a>
+          <a href="/">Voltar</a>
         </Styles.Link>
       </Styles.MainArea>
    
